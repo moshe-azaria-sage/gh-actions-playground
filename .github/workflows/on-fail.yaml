@@ -24,7 +24,7 @@ jobs:
 
       - uses: slackapi/slack-github-action@v1.24.0
         with:
-          payload: ${{ steps.read_json.outputs.json_content }}
+          payload: ${{ fromJson(steps.read_json.outputs.json_content) }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.MOSHE_PERSONAL_SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
