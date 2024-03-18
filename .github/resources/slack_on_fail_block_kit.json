@@ -1,0 +1,40 @@
+{
+    "blocks": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": ":warning: `main` branch failure in CI ",
+          "emoji": true
+        }
+      }, 
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "View run details: "
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Run Details",
+            "emoji": true
+          },
+          "value": "clicked_1",
+          "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "context",
+        "elements": [
+          {
+            "type": "mrkdwn",
+            "text": "Linked Repo <${{github.server_url}}/${{github.repository}}|${{github.repository}}> | <${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}|View Failure>",
+            "emoji": true
+          }
+        ]
+      }
+    ]
+  }
