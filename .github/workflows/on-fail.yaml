@@ -16,8 +16,8 @@ jobs:
       - name: Read Slack JSON file
         id: read_json
         run: |
-          # JSON_CONTENT=$(jq '.' .github/resources/slack_on_fail_block_kit.json)
-          JSON_CONTENT=$(cat .github/resources/slack_on_fail_block_kit.json)
+          JSON_CONTENT=$(jq '.' .github/resources/slack_on_fail_block_kit.json --compact-output)
+          # JSON_CONTENT=$(cat .github/resources/slack_on_fail_block_kit.json)
           echo "json_content<<EOF" >> $GITHUB_OUTPUT
           echo "$JSON_CONTENT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
