@@ -1,0 +1,32 @@
+name: Failing Workflow
+
+on: 
+  workflow_dispatch:
+    inputs:
+      shouldFail:
+        description: 'Should fail the job?'
+        required: false
+        default: 1
+        type: number
+      logLevel:
+        description: 'Log level'
+        required: false
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Run failing command
+        run: |
+          echo "This is a failing command"
+          exit $SHOULD_FAIL
+        env:
+          LEVEL: ${{ inputs.logLevel }}
+          SHOULD_FAIL: ${{ inputs.shouldFail }}

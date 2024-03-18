@@ -1,0 +1,58 @@
+name: Notify on `main` Failure
+on:
+  workflow_run:
+    workflows: [Failing Workflow]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  on-failure:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'failure' || github.event.workflow_run.conclusion == 'timed_out'
+    steps:
+      - uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": ":warning: `main` branch failure in CI ",
+                    "emoji": true
+                  },
+                }, 
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "View run details: "
+                  },
+                  "accessory": {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "Run Details",
+                      "emoji": true
+                    },
+                    "value": "clicked_1",
+                    "url": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}",
+                    "action_id": "button-action"
+                  }
+                },
+                {
+                  "type": "context",
+                  "elements": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "Linked Repo <${{github.server_url}}/${{github.repository}}|${{github.repository}}> | <${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}|View Failure>",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.MOSHE_PERSONAL_SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
