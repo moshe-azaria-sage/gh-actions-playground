@@ -23,8 +23,8 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
           # echo "json_content=$JSON_CONTENT" >> $GITHUB_OUTPUT
 
-      - run: |
-          echo "${{ steps.read_json.outputs.json_content }}"
+      # - run: |
+      #     echo "${{ steps.read_json.outputs.json_content }}"
       - run: |
           echo "${{ fromJson(steps.read_json.outputs.json_content) }}"
 
