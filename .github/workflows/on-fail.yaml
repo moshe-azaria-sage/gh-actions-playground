@@ -10,12 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'failure' || github.event.workflow_run.conclusion == 'timed_out'
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Read Slack JSON file
         id: read_json
         run: |
           JSON_CONTENT=$(jq '.' .github/resources/slack_on_fail_block_kit.json)
           echo "json_content=$JSON_CONTENT" >> $GITHUB_OUTPUT
-          
+
       - uses: slackapi/slack-github-action@v1.24.0
         with:
           payload: ${{ steps.read_json.outputs.json_content }}
