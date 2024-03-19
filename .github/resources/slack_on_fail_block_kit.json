@@ -31,7 +31,7 @@
       "elements": [
         {
           "type": "mrkdwn",
-          "text": "Linked Repo $someURL"
+          "text": "Linked Repo $viewFailure"
         }
       ]
     }

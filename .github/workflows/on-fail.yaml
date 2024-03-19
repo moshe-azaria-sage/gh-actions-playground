@@ -16,19 +16,27 @@ jobs:
       - name: Read Slack JSON file
         id: read_json
         run: |
+          echo "Skipping..."
           # JSON_CONTENT=$(jq '.' .github/resources/slack_on_fail_block_kit.json --compact-output)
           # # JSON_CONTENT=$(cat .github/resources/slack_on_fail_block_kit.json)
           # echo "json_content<<EOF" >> $GITHUB_OUTPUT
           # echo "$JSON_CONTENT" >> $GITHUB_OUTPUT
           # echo "EOF" >> $GITHUB_OUTPUT
           # # echo "json_content=$JSON_CONTENT" >> $GITHUB_OUTPUT
-          sed -i 's;$runURL;https://playwright.dev/docs/intro;g' .github/resources/slack_on_fail_block_kit.json
-          sed -i 's;$someURL;<https://playwright.dev/docs/intro|repo> | <https://playwright.dev/docs/intro|View Failure>;g' .github/resources/slack_on_fail_block_kit.json
 
       # - run: |
       #     echo "${{ steps.read_json.outputs.json_content }}"
       # - run: |
       #     echo "${{ fromJson(steps.read_json.outputs.json_content) }}"
+
+      - name: Replace Slack JSON File Variables
+        run: |
+          TRIGGERING_WORKFLOW_RUN_URL="${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}"
+          DETAILS_LINK="<${{github.server_url}}/${{github.repository}}|${{github.repository}}> | <${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}|View Failure>"
+          echo $TRIGGERING_WORKFLOW_RUN_URL
+          echo $DETAILS_LINK
+          sed -i 's;$runURL;$TRIGGERING_WORKFLOW_RUN_URL;g' .github/resources/slack_on_fail_block_kit.json
+          sed -i 's;$viewFailure;$DETAILS_LINK;g' .github/resources/slack_on_fail_block_kit.json
 
       - uses: slackapi/slack-github-action@v1.24.0
         with:
