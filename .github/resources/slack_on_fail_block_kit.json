@@ -22,7 +22,7 @@
           "emoji": true
         },
         "value": "clicked_1",
-        "url": "runURL",
+        "url": "$runURL",
         "action_id": "button-action"
       }
     },
@@ -31,7 +31,7 @@
       "elements": [
         {
           "type": "mrkdwn",
-          "text": "Linked Repo <https://playwright.dev/docs/intro|repo> | <runURL|View Failure>"
+          "text": "Linked Repo $someURL"
         }
       ]
     }

@@ -22,7 +22,8 @@ jobs:
           # echo "$JSON_CONTENT" >> $GITHUB_OUTPUT
           # echo "EOF" >> $GITHUB_OUTPUT
           # # echo "json_content=$JSON_CONTENT" >> $GITHUB_OUTPUT
-          sed -i 's/runURL/https://playwright.dev/docs/intro/g' .github/resources/slack_on_fail_block_kit.json
+          sed -i 's;$runURL;https://playwright.dev/docs/intro;g' .github/resources/slack_on_fail_block_kit.json
+          sed -i 's;$someURL;<https://playwright.dev/docs/intro|repo> | <https://playwright.dev/docs/intro|View Failure>;g' .github/resources/slack_on_fail_block_kit.json
 
       # - run: |
       #     echo "${{ steps.read_json.outputs.json_content }}"
