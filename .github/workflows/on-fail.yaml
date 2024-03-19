@@ -37,6 +37,7 @@ jobs:
           echo $DETAILS_LINK
           sed -i 's;$runURL;$TRIGGERING_WORKFLOW_RUN_URL;g' .github/resources/slack_on_fail_block_kit.json
           sed -i 's;$viewFailure;$DETAILS_LINK;g' .github/resources/slack_on_fail_block_kit.json
+          cat .github/resources/slack_on_fail_block_kit.json
 
       - uses: slackapi/slack-github-action@v1.24.0
         with:
