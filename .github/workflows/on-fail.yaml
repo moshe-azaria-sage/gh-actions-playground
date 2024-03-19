@@ -35,8 +35,8 @@ jobs:
           DETAILS_LINK="<${{github.server_url}}/${{github.repository}}|${{github.repository}}> | <${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}|View Failure>"
           echo $TRIGGERING_WORKFLOW_RUN_URL
           echo $DETAILS_LINK
-          sed -i 's;$runURL;$TRIGGERING_WORKFLOW_RUN_URL;g' .github/resources/slack_on_fail_block_kit.json
-          sed -i 's;$viewFailure;$DETAILS_LINK;g' .github/resources/slack_on_fail_block_kit.json
+          sed -i "s;$runURL;$TRIGGERING_WORKFLOW_RUN_URL;g" .github/resources/slack_on_fail_block_kit.json
+          sed -i "s;$viewFailure;$DETAILS_LINK;g" .github/resources/slack_on_fail_block_kit.json
           cat .github/resources/slack_on_fail_block_kit.json
 
       - uses: slackapi/slack-github-action@v1.24.0
